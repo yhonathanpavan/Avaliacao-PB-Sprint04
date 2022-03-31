@@ -12,6 +12,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/partidos")
@@ -31,12 +33,12 @@ public class PartidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PartidoFormDTO> insert(@RequestBody PartidoFormDTO partidoForm){
+    public ResponseEntity<PartidoFormDTO> insert(@RequestBody @Valid PartidoFormDTO partidoForm){
         return partidoService.insert(partidoForm);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PartidoDTO> update(@PathVariable Long id, @RequestBody PartidoFormDTO partidoForm){
+    public ResponseEntity<PartidoDTO> update(@PathVariable Long id, @RequestBody @Valid PartidoFormDTO partidoForm){
         return partidoService.update(id, partidoForm);
     }
 

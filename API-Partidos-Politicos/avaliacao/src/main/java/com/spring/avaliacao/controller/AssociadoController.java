@@ -12,7 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/associados")
@@ -32,12 +32,12 @@ public class AssociadoController{
     }
 
     @PostMapping
-    public ResponseEntity<AssociadoFormDTO> insert(@RequestBody AssociadoFormDTO associadoForm){
+    public ResponseEntity<AssociadoFormDTO> insert(@RequestBody @Valid AssociadoFormDTO associadoForm){
         return associadoService.insert(associadoForm);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AssociadoDTO> update(@PathVariable Long id, @RequestBody AssociadoFormDTO associadoForm){
+    public ResponseEntity<AssociadoDTO> update(@PathVariable Long id, @RequestBody @Valid AssociadoFormDTO associadoForm){
         return associadoService.update(id, associadoForm);
     }
 
