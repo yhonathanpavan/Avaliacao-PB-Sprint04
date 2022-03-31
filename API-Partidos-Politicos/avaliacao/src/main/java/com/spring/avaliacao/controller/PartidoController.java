@@ -1,16 +1,17 @@
 package com.spring.avaliacao.controller;
 
-import com.spring.avaliacao.dto.AssociadoDTO;
-import com.spring.avaliacao.dto.AssociadoFormDTO;
+import com.spring.avaliacao.constants.Ideologia;
 import com.spring.avaliacao.dto.PartidoDTO;
 import com.spring.avaliacao.dto.PartidoFormDTO;
-import com.spring.avaliacao.services.AssociadoServiceImpl;
 import com.spring.avaliacao.services.PartidoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/partidos")
@@ -20,8 +21,8 @@ public class PartidoController {
     PartidoServiceImpl partidoService;
 
     @GetMapping
-    public ResponseEntity<List<PartidoDTO>> findAll(){
-        return partidoService.findAll();
+    public ResponseEntity<Page<PartidoDTO>> findAll(@RequestParam(required = false) Ideologia ideologia, @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable paginacao){
+        return partidoService.findAll(ideologia, paginacao);
     }
 
     @GetMapping("/{id}")

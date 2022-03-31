@@ -1,5 +1,6 @@
 package com.spring.avaliacao.services;
 
+import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.dto.AssociadoDTO;
 import com.spring.avaliacao.dto.AssociadoFormDTO;
 import com.spring.avaliacao.entities.Associado;
@@ -7,12 +8,14 @@ import com.spring.avaliacao.exception.ObjectNotFoundException;
 import com.spring.avaliacao.repository.AssociadoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,10 +29,16 @@ public class AssociadoServiceImpl implements AssociadoService{
     ModelMapper mapper;
 
     @Override
-    public ResponseEntity<List<AssociadoDTO>> findAll() {
-        List<Associado> associado = associadoRepository.findAll();
-        List<AssociadoDTO> associadoDTO = associado.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(associadoDTO);
+    public ResponseEntity<Page<AssociadoDTO>> findAll(CargoPolitico cargoPolitico, Pageable paginacao){
+        if(cargoPolitico == null) {
+            Page<Associado> associado = associadoRepository.findAll(paginacao);
+            Page<AssociadoDTO> associadoDTO = new PageImpl<>(associado.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList()));
+            return ResponseEntity.ok().body(associadoDTO);
+        }else{
+            Page<Associado> associado = associadoRepository.findByCargoPolitico(cargoPolitico, paginacao);
+            Page<AssociadoDTO> associadoDTO = new PageImpl<>(associado.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList()));
+            return ResponseEntity.ok().body(associadoDTO);
+        }
     }
 
     @Override
@@ -50,10 +59,10 @@ public class AssociadoServiceImpl implements AssociadoService{
     }
 
     @Override
-    public ResponseEntity<AssociadoDTO> update(Long id, AssociadoFormDTO filmeFormDTO) {
+    public ResponseEntity<AssociadoDTO> update(Long id, AssociadoFormDTO associadoForm) {
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
-            Associado associado = mapper.map(filmeFormDTO, Associado.class);
+            Associado associado = mapper.map(associadoForm, Associado.class);
             associado.setId(id);
             associadoRepository.save(associado);
             return ResponseEntity.ok().body(mapper.map(associado, AssociadoDTO.class));

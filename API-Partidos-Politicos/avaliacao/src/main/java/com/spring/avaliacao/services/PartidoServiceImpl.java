@@ -1,6 +1,7 @@
 package com.spring.avaliacao.services;
 
 
+import com.spring.avaliacao.constants.Ideologia;
 import com.spring.avaliacao.dto.PartidoDTO;
 import com.spring.avaliacao.dto.PartidoFormDTO;
 import com.spring.avaliacao.entities.Partido;
@@ -8,17 +9,19 @@ import com.spring.avaliacao.exception.ObjectNotFoundException;
 import com.spring.avaliacao.repository.PartidoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class PartidoServiceImpl implements PartidoService{
+public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     PartidoRepository partidoRepository;
@@ -27,13 +30,19 @@ public class PartidoServiceImpl implements PartidoService{
     ModelMapper mapper;
 
     @Override
-    public ResponseEntity<List<PartidoDTO>> findAll() {
-        List<Partido> partidos = partidoRepository.findAll();
-
-        List<PartidoDTO> partidosDTO = partidos.stream().map(element -> mapper.map(element, PartidoDTO.class)).collect(Collectors.toList());
-
-        return ResponseEntity.ok().body(partidosDTO);
+    public ResponseEntity<Page<PartidoDTO>> findAll(Ideologia ideologia, Pageable paginacao) {
+        if (ideologia == null) {
+            Page<Partido> partidos = partidoRepository.findAll(paginacao);
+            Page<PartidoDTO> partidosDTO = new PageImpl<>(partidos.stream().map(element -> mapper.map(element, PartidoDTO.class)).collect(Collectors.toList()));
+            return ResponseEntity.ok().body(partidosDTO);
+        }else{
+            Page<Partido> partidos = partidoRepository.findByIdeologia(ideologia, paginacao);
+            Page<PartidoDTO> partidosDTO = new PageImpl<>(partidos.stream().map(element -> mapper.map(element, PartidoDTO.class)).collect(Collectors.toList()));
+            return ResponseEntity.ok().body(partidosDTO);
+        }
     }
+
+
 
     @Override
     public ResponseEntity<PartidoDTO> findById(Long id) {
