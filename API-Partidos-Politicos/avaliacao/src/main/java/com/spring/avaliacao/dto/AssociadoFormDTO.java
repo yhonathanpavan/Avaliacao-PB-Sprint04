@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +15,6 @@ public class AssociadoFormDTO {
 
     private String nome;
     private CargoPolitico cargoPolitico;
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
     private Sexo sexo;
 }

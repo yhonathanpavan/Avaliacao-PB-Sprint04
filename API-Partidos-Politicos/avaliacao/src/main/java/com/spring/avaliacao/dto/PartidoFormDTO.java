@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +14,5 @@ public class PartidoFormDTO {
     private String nome;
     private String sigla;
     private Ideologia ideologia;
-    private Date dataDeFundacao;
+    private LocalDate dataDeFundacao;
 }

@@ -1,11 +1,13 @@
 package com.spring.avaliacao.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.spring.avaliacao.constants.Ideologia;
+import com.spring.avaliacao.serializer.LocalDateSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +17,6 @@ public class PartidoDTO {
     private String nome;
     private String sigla;
     private Ideologia ideologia;
-    private Date dataDeFundacao;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate dataDeFundacao;
 }

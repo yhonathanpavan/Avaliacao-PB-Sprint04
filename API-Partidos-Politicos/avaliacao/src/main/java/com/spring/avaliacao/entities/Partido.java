@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -21,6 +22,6 @@ public class Partido{
     private String sigla;
     @Enumerated(EnumType.STRING)
     private Ideologia ideologia;
-    private Date dataDeFundacao;
+    private LocalDate dataDeFundacao;
 
 }
