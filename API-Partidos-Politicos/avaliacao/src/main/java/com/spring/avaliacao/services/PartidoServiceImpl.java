@@ -5,7 +5,7 @@ import com.spring.avaliacao.constants.Ideologia;
 import com.spring.avaliacao.dto.PartidoDTO;
 import com.spring.avaliacao.dto.PartidoFormDTO;
 import com.spring.avaliacao.entities.Partido;
-import com.spring.avaliacao.exception.ObjectNotFoundException;
+import com.spring.avaliacao.exception.ObjectNotFound.ObjectNotFoundException;
 import com.spring.avaliacao.repository.PartidoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.dto.AssociadoDTO;
 import com.spring.avaliacao.dto.AssociadoFormDTO;
 import com.spring.avaliacao.entities.Associado;
-import com.spring.avaliacao.exception.ObjectNotFoundException;
+import com.spring.avaliacao.exception.ObjectNotFound.ObjectNotFoundException;
 import com.spring.avaliacao.repository.AssociadoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
