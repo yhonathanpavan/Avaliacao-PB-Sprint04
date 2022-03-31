@@ -1,4 +1,4 @@
-package com.spring.avaliacao.exception;
+package com.spring.avaliacao.exception.ObjectNotFound;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

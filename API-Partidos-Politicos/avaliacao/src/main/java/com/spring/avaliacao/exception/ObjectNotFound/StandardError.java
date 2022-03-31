@@ -1,4 +1,4 @@
-package com.spring.avaliacao.exception;
+package com.spring.avaliacao.exception.ObjectNotFound;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
