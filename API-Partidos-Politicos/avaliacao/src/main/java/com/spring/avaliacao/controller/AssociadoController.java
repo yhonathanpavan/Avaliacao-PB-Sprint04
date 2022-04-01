@@ -3,6 +3,7 @@ package com.spring.avaliacao.controller;
 import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.dto.AssociadoDTO;
 import com.spring.avaliacao.dto.AssociadoFormDTO;
+import com.spring.avaliacao.dto.VincularFormDTO;
 import com.spring.avaliacao.services.AssociadoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,11 @@ public class AssociadoController{
     @PostMapping
     public ResponseEntity<AssociadoFormDTO> insert(@RequestBody @Valid AssociadoFormDTO associadoForm){
         return associadoService.insert(associadoForm);
+    }
+
+    @PostMapping("/partidos")
+    public ResponseEntity<VincularFormDTO> insert(@RequestBody @Valid VincularFormDTO vincularForm){
+        return associadoService.insertPartido(vincularForm);
     }
 
     @PutMapping("/{id}")
