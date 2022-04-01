@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -55,7 +54,7 @@ public class PartidoServiceImpl implements PartidoService {
         List<Associado> associadosDoPartido = associadoRepository.findByPartidoId(id);
 
         if(associadosDoPartido.isEmpty()){
-            throw new ObjectNotFoundException("Partido não possui nenhum associado");
+            throw new ObjectNotFoundException("Partido não possui nenhum associado!");
         }else{
             List<AssociadoDTO> associadoDTO = associadosDoPartido.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList());
             return associadoDTO;
@@ -98,7 +97,9 @@ public class PartidoServiceImpl implements PartidoService {
 
         if (partidoOptional.isPresent()) {
             partidoRepository.deleteById(id);
-            return "Partido excluído com sucesso!";
+
+            String siglaPartido = partidoOptional.get().getSigla();
+            return "Partido " + siglaPartido + " excluído com sucesso!";
         }
         throw new ObjectNotFoundException("Partido não encontrado!");
     }
