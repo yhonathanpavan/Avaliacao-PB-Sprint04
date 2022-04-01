@@ -19,6 +19,6 @@ public class PartidoFormDTO {
     private String sigla;
     @NotNull
     private Ideologia ideologia;
-    @NotEmpty
+    @NotNull
     private LocalDate dataDeFundacao;
 }
