@@ -31,4 +31,8 @@ public class Associado{
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
+    @ManyToOne
+    @JoinColumn(name="partido_id")
+    private Partido partido;
+
 }
