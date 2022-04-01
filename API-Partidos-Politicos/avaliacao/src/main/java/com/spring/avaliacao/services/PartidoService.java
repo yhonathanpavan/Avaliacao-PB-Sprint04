@@ -10,20 +10,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.net.URI;
 import java.util.List;
 
 public interface PartidoService {
 
-    ResponseEntity<Page<PartidoDTO>> findAll(Ideologia ideologia, Pageable paginacao);
+    Page<PartidoDTO> findAll(Ideologia ideologia, Pageable paginacao);
 
-    ResponseEntity<List<AssociadoDTO>> findAllAssociados(Long id);
+    List<AssociadoDTO> findAllAssociados(Long id);
 
-    ResponseEntity<PartidoDTO> findById(Long id);
+    PartidoDTO findById(Long id);
 
-    ResponseEntity<PartidoFormDTO> insert(PartidoFormDTO partidoForm);
+    URI insert(PartidoFormDTO partidoForm);
 
-    ResponseEntity<PartidoDTO> update(Long id, PartidoFormDTO partidoForm);
+    PartidoDTO update(Long id, PartidoFormDTO partidoForm);
 
-    ResponseEntity<?> deleteById(Long id);
+    String deleteById(Long id);
 
 }

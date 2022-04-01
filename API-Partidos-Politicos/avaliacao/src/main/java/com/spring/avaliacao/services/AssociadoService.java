@@ -6,21 +6,20 @@ import com.spring.avaliacao.dto.AssociadoFormDTO;
 import com.spring.avaliacao.dto.VincularFormDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import java.net.URI;
 
 public interface AssociadoService {
 
-    ResponseEntity<Page<AssociadoDTO>> findAll(CargoPolitico cargoPolitico, Pageable paginacao);
+    Page<AssociadoDTO> findAll(CargoPolitico cargoPolitico, Pageable paginacao);
 
-    ResponseEntity<AssociadoDTO> findById(Long id);
+    AssociadoDTO findById(Long id);
 
-    ResponseEntity<AssociadoFormDTO> insert(AssociadoFormDTO associadoForm);
+    URI insert(AssociadoFormDTO associadoForm);
 
-    ResponseEntity<?> insertPartido(VincularFormDTO vincularForm);
+    String insertPartido(VincularFormDTO vincularForm);
 
-    ResponseEntity<AssociadoDTO> update(Long id, AssociadoFormDTO associadoForm);
+    AssociadoDTO update(Long id, AssociadoFormDTO associadoForm);
 
-    ResponseEntity<?> deleteById(Long id);
+    String deleteById(Long id);
 }
