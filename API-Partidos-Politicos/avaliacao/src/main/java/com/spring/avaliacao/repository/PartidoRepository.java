@@ -1,6 +1,5 @@
 package com.spring.avaliacao.repository;
 
-import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.constants.Ideologia;
 import com.spring.avaliacao.entities.Partido;
 import org.springframework.data.domain.Page;
