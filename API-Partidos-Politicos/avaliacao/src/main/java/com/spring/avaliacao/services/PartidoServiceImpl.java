@@ -37,20 +37,20 @@ public class PartidoServiceImpl implements PartidoService {
     ModelMapper mapper;
 
     @Override
-    public ResponseEntity<Page<PartidoDTO>> findAll(Ideologia ideologia, Pageable paginacao) {
+    public Page<PartidoDTO> findAll(Ideologia ideologia, Pageable paginacao) {
         if (ideologia == null) {
             Page<Partido> partidos = partidoRepository.findAll(paginacao);
             Page<PartidoDTO> partidosDTO = new PageImpl<>(partidos.stream().map(element -> mapper.map(element, PartidoDTO.class)).collect(Collectors.toList()));
-            return ResponseEntity.ok().body(partidosDTO);
+            return partidosDTO;
         }else{
             Page<Partido> partidos = partidoRepository.findByIdeologia(ideologia, paginacao);
             Page<PartidoDTO> partidosDTO = new PageImpl<>(partidos.stream().map(element -> mapper.map(element, PartidoDTO.class)).collect(Collectors.toList()));
-            return ResponseEntity.ok().body(partidosDTO);
+            return partidosDTO;
         }
     }
 
     @Override
-    public ResponseEntity<List<AssociadoDTO>> findAllAssociados(Long id){
+    public List<AssociadoDTO> findAllAssociados(Long id){
 
         List<Associado> associadosDoPartido = associadoRepository.findByPartidoId(id);
 
@@ -58,47 +58,47 @@ public class PartidoServiceImpl implements PartidoService {
             throw new ObjectNotFoundException("Partido não possui nenhum associado");
         }else{
             List<AssociadoDTO> associadoDTO = associadosDoPartido.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList());
-            return ResponseEntity.ok().body(associadoDTO);
+            return associadoDTO;
         }
     }
 
 
     @Override
-    public ResponseEntity<PartidoDTO> findById(Long id) {
+    public PartidoDTO findById(Long id) {
         Optional<Partido> partido = partidoRepository.findById(id);
         if (partido.isPresent()) {
-            return ResponseEntity.ok().body(mapper.map(partido.get(), PartidoDTO.class));
+            return mapper.map(partido.get(), PartidoDTO.class);
         }
         throw new ObjectNotFoundException("Partido não encontrado!");
     }
 
     @Override
-    public ResponseEntity<PartidoFormDTO> insert(PartidoFormDTO partidoForm) {
+    public URI insert(PartidoFormDTO partidoForm) {
         Partido partido = mapper.map(partidoForm, Partido.class);
         partidoRepository.save(partido);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(partido.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return uri;
     }
 
     @Override
-    public ResponseEntity<PartidoDTO> update(Long id, PartidoFormDTO partidoForm) {
+    public PartidoDTO update(Long id, PartidoFormDTO partidoForm) {
         Optional<Partido> partidoOptional = partidoRepository.findById(id);
         if (partidoOptional.isPresent()) {
             Partido partido = mapper.map(partidoForm, Partido.class);
             partido.setId(id);
             partidoRepository.save(partido);
-            return ResponseEntity.ok().body(mapper.map(partido, PartidoDTO.class));
+            return mapper.map(partido, PartidoDTO.class);
         }
         throw new ObjectNotFoundException("Partido não encontrado!");
     }
 
     @Override
-    public ResponseEntity<?> deleteById(Long id){
+    public String deleteById(Long id){
         Optional<Partido> partidoOptional = partidoRepository.findById(id);
 
         if (partidoOptional.isPresent()) {
             partidoRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            return "Partido excluído com sucesso!";
         }
         throw new ObjectNotFoundException("Partido não encontrado!");
     }

@@ -35,37 +35,36 @@ public class AssociadoServiceImpl implements AssociadoService{
     ModelMapper mapper;
 
     @Override
-    public ResponseEntity<Page<AssociadoDTO>> findAll(CargoPolitico cargoPolitico, Pageable paginacao){
+    public Page<AssociadoDTO> findAll(CargoPolitico cargoPolitico, Pageable paginacao){
         if(cargoPolitico == null) {
             Page<Associado> associado = associadoRepository.findAll(paginacao);
             Page<AssociadoDTO> associadoDTO = new PageImpl<>(associado.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList()));
-            return ResponseEntity.ok().body(associadoDTO);
+            return associadoDTO;
         }else{
             Page<Associado> associado = associadoRepository.findByCargoPolitico(cargoPolitico, paginacao);
             Page<AssociadoDTO> associadoDTO = new PageImpl<>(associado.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList()));
-            return ResponseEntity.ok().body(associadoDTO);
+            return associadoDTO;
         }
     }
 
     @Override
-    public ResponseEntity<AssociadoDTO> findById(Long id){
+    public AssociadoDTO findById(Long id){
         Optional<Associado> associado = associadoRepository.findById(id);
         if (associado.isPresent()){
-            return ResponseEntity.ok().body(mapper.map(associado.get(), AssociadoDTO.class));
+            return mapper.map(associado.get(), AssociadoDTO.class);
         }
         throw new ObjectNotFoundException("Associado não encontrado!");
     }
 
     @Override
-    public ResponseEntity<AssociadoFormDTO> insert(AssociadoFormDTO associadoForm) {
+    public URI insert(AssociadoFormDTO associadoForm) {
         Associado associado = mapper.map(associadoForm, Associado.class);
         associadoRepository.save(associado);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(associado.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(associado.getId()).toUri();
     }
 
     @Override
-    public ResponseEntity<?> insertPartido(VincularFormDTO vincularForm) {
+    public String insertPartido(VincularFormDTO vincularForm) {
 
         Optional<Associado> associado = associadoRepository.findById(vincularForm.getIdAssociado());
         Optional<Partido> partido = partidoRepository.findById(vincularForm.getIdPartido());
@@ -75,29 +74,29 @@ public class AssociadoServiceImpl implements AssociadoService{
             associado.get().setPartido(partido.get());
             associadoRepository.save(associado.get());
 
-            return ResponseEntity.ok().body(associado.get());
+            return "Associado foi vinculado a um Partido com sucesso!";
         }
         throw new ObjectNotFoundException("Associado ou partido não encontrado! Revise os Id's inseridos");
     }
 
     @Override
-    public ResponseEntity<AssociadoDTO> update(Long id, AssociadoFormDTO associadoForm) {
+    public AssociadoDTO update(Long id, AssociadoFormDTO associadoForm) {
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
             Associado associado = mapper.map(associadoForm, Associado.class);
             associado.setId(id);
             associadoRepository.save(associado);
-            return ResponseEntity.ok().body(mapper.map(associado, AssociadoDTO.class));
+            return mapper.map(associado, AssociadoDTO.class);
         }
         throw new ObjectNotFoundException("Associado não encontrado!");
     }
 
     @Override
-    public ResponseEntity<?> deleteById(Long id) {
+    public String deleteById(Long id) {
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
             associadoRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            return "Associado excluído com sucesso!";
         }
         throw new ObjectNotFoundException("Associado não encontrado!");
     }

@@ -24,32 +24,32 @@ public class AssociadoController{
 
     @GetMapping
     public ResponseEntity<Page<AssociadoDTO>> findAll(@RequestParam(required = false)CargoPolitico cargoPolitico, @PageableDefault(sort = "id", direction = Sort.Direction.ASC)Pageable paginacao){
-        return associadoService.findAll(cargoPolitico ,paginacao);
+        return ResponseEntity.ok().body(associadoService.findAll(cargoPolitico ,paginacao));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AssociadoDTO> findById(@PathVariable Long id){
-        return associadoService.findById(id);
+        return ResponseEntity.ok().body(associadoService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<AssociadoFormDTO> insert(@RequestBody @Valid AssociadoFormDTO associadoForm){
-        return associadoService.insert(associadoForm);
+        return ResponseEntity.created(associadoService.insert(associadoForm)).build();
     }
 
     @PostMapping("/partidos")
-    public ResponseEntity<?> insert(@RequestBody @Valid VincularFormDTO vincularForm){
-        return associadoService.insertPartido(vincularForm);
+    public ResponseEntity<String> insertPartido(@RequestBody @Valid VincularFormDTO vincularForm){
+        return ResponseEntity.ok().body(associadoService.insertPartido(vincularForm));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AssociadoDTO> update(@PathVariable Long id, @RequestBody @Valid AssociadoFormDTO associadoForm){
-        return associadoService.update(id, associadoForm);
+        return ResponseEntity.ok().body(associadoService.update(id, associadoForm));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id){
-        return associadoService.deleteById(id);
+    public ResponseEntity<String> deleteById(@PathVariable Long id){
+        return  ResponseEntity.ok().body(associadoService.deleteById(id));
     }
 
 }
