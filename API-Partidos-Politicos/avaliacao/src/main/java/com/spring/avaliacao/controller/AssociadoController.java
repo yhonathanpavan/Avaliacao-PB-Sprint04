@@ -38,7 +38,7 @@ public class AssociadoController{
     }
 
     @PostMapping("/partidos")
-    public ResponseEntity<VincularFormDTO> insert(@RequestBody @Valid VincularFormDTO vincularForm){
+    public ResponseEntity<?> insert(@RequestBody @Valid VincularFormDTO vincularForm){
         return associadoService.insertPartido(vincularForm);
     }
 
