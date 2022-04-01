@@ -16,6 +16,8 @@ public interface PartidoService {
 
     ResponseEntity<Page<PartidoDTO>> findAll(Ideologia ideologia, Pageable paginacao);
 
+    ResponseEntity<List<AssociadoDTO>> findAllAssociados(Long id);
+
     ResponseEntity<PartidoDTO> findById(Long id);
 
     ResponseEntity<PartidoFormDTO> insert(PartidoFormDTO partidoForm);

@@ -3,9 +3,12 @@ package com.spring.avaliacao.services;
 import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.dto.AssociadoDTO;
 import com.spring.avaliacao.dto.AssociadoFormDTO;
+import com.spring.avaliacao.dto.VincularFormDTO;
 import com.spring.avaliacao.entities.Associado;
+import com.spring.avaliacao.entities.Partido;
 import com.spring.avaliacao.exception.ObjectNotFound.ObjectNotFoundException;
 import com.spring.avaliacao.repository.AssociadoRepository;
+import com.spring.avaliacao.repository.PartidoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +27,9 @@ public class AssociadoServiceImpl implements AssociadoService{
 
     @Autowired
     AssociadoRepository associadoRepository;
+
+    @Autowired
+    PartidoRepository partidoRepository;
 
     @Autowired
     ModelMapper mapper;
@@ -56,6 +62,22 @@ public class AssociadoServiceImpl implements AssociadoService{
         associadoRepository.save(associado);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(associado.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @Override
+    public ResponseEntity<?> insertPartido(VincularFormDTO vincularForm) {
+
+        Optional<Associado> associado = associadoRepository.findById(vincularForm.getIdAssociado());
+        Optional<Partido> partido = partidoRepository.findById(vincularForm.getIdPartido());
+
+        if(associado.isPresent() && partido.isPresent()){
+
+            associado.get().setPartido(partido.get());
+            associadoRepository.save(associado.get());
+
+            return ResponseEntity.ok().body(associado.get());
+        }
+        throw new ObjectNotFoundException("Associado ou partido não encontrado! Revise os Id's inseridos");
     }
 
     @Override

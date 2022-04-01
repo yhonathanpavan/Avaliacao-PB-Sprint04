@@ -3,6 +3,7 @@ package com.spring.avaliacao.services;
 import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.dto.AssociadoDTO;
 import com.spring.avaliacao.dto.AssociadoFormDTO;
+import com.spring.avaliacao.dto.VincularFormDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ public interface AssociadoService {
     ResponseEntity<AssociadoDTO> findById(Long id);
 
     ResponseEntity<AssociadoFormDTO> insert(AssociadoFormDTO associadoForm);
+
+    ResponseEntity<?> insertPartido(VincularFormDTO vincularForm);
 
     ResponseEntity<AssociadoDTO> update(Long id, AssociadoFormDTO associadoForm);
 

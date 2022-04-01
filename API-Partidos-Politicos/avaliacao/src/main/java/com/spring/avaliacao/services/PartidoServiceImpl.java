@@ -2,10 +2,13 @@ package com.spring.avaliacao.services;
 
 
 import com.spring.avaliacao.constants.Ideologia;
+import com.spring.avaliacao.dto.AssociadoDTO;
 import com.spring.avaliacao.dto.PartidoDTO;
 import com.spring.avaliacao.dto.PartidoFormDTO;
+import com.spring.avaliacao.entities.Associado;
 import com.spring.avaliacao.entities.Partido;
 import com.spring.avaliacao.exception.ObjectNotFound.ObjectNotFoundException;
+import com.spring.avaliacao.repository.AssociadoRepository;
 import com.spring.avaliacao.repository.PartidoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +29,9 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     PartidoRepository partidoRepository;
+
+    @Autowired
+    AssociadoRepository associadoRepository;
 
     @Autowired
     ModelMapper mapper;
@@ -42,6 +49,18 @@ public class PartidoServiceImpl implements PartidoService {
         }
     }
 
+    @Override
+    public ResponseEntity<List<AssociadoDTO>> findAllAssociados(Long id){
+
+        List<Associado> associadosDoPartido = associadoRepository.findByPartidoId(id);
+
+        if(associadosDoPartido.isEmpty()){
+            throw new ObjectNotFoundException("Partido não possui nenhum associado");
+        }else{
+            List<AssociadoDTO> associadoDTO = associadosDoPartido.stream().map(element -> mapper.map(element, AssociadoDTO.class)).collect(Collectors.toList());
+            return ResponseEntity.ok().body(associadoDTO);
+        }
+    }
 
 
     @Override
@@ -74,7 +93,7 @@ public class PartidoServiceImpl implements PartidoService {
     }
 
     @Override
-    public ResponseEntity<?> deleteById(Long id) {
+    public ResponseEntity<?> deleteById(Long id){
         Optional<Partido> partidoOptional = partidoRepository.findById(id);
 
         if (partidoOptional.isPresent()) {
