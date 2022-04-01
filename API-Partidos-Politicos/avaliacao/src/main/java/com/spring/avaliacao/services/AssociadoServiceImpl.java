@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -74,7 +73,10 @@ public class AssociadoServiceImpl implements AssociadoService{
             associado.get().setPartido(partido.get());
             associadoRepository.save(associado.get());
 
-            return "Associado foi vinculado a um Partido com sucesso!";
+            String nomeAssociado = associado.get().getNome();
+            String siglaPartido = partido.get().getSigla();
+
+            return "Associado(a) " + nomeAssociado + " foi vinculado(a) ao " + siglaPartido + " com sucesso!";
         }
         throw new ObjectNotFoundException("Associado ou partido não encontrado! Revise os Id's inseridos");
     }
@@ -96,8 +98,28 @@ public class AssociadoServiceImpl implements AssociadoService{
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
             associadoRepository.deleteById(id);
-            return "Associado excluído com sucesso!";
+
+            String nomeAssociado = associadoOptional.get().getNome();
+            return "Associado " + nomeAssociado + " excluído com sucesso!";
         }
         throw new ObjectNotFoundException("Associado não encontrado!");
+    }
+
+    @Override
+    public String deletePartidoById(Long idAssociado, Long idPartido) {
+        Optional<Associado> associadoOptional = associadoRepository.findById(idAssociado);
+        Optional<Partido> partidoOptional = partidoRepository.findById(idPartido);
+
+        if (associadoOptional.isPresent() && partidoOptional.isPresent() && associadoOptional.get().getPartido() != null){
+
+            associadoOptional.get().setPartido(null);
+            associadoRepository.save(associadoOptional.get());
+
+            String nomeAssociado = associadoOptional.get().getNome();
+            String siglaPartido = partidoOptional.get().getSigla();
+
+            return nomeAssociado + " foi desvinculado do Partido " + siglaPartido + " com sucesso!";
+        }
+        throw new ObjectNotFoundException("Associado ou Partido não encontrado!");
     }
 }

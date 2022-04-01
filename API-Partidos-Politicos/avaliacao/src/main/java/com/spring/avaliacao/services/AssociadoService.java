@@ -22,4 +22,6 @@ public interface AssociadoService {
     AssociadoDTO update(Long id, AssociadoFormDTO associadoForm);
 
     String deleteById(Long id);
+
+    String deletePartidoById(Long idAssociado, Long idPartido);
 }

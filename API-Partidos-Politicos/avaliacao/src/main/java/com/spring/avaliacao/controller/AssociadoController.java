@@ -52,4 +52,9 @@ public class AssociadoController{
         return  ResponseEntity.ok().body(associadoService.deleteById(id));
     }
 
+    @DeleteMapping("/{idAssociado}/partidos/{idPartido}")
+    public ResponseEntity<String> deletePartidoById(@PathVariable Long idAssociado, @PathVariable Long idPartido){
+        return  ResponseEntity.ok().body(associadoService.deletePartidoById(idAssociado, idPartido));
+    }
+
 }
