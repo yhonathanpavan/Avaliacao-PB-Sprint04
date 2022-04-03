@@ -3,12 +3,14 @@ package com.spring.avaliacao.entities;
 import com.spring.avaliacao.constants.CargoPolitico;
 import com.spring.avaliacao.constants.Sexo;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
