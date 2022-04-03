@@ -76,7 +76,7 @@ public class AssociadoServiceImpl implements AssociadoService{
             String nomeAssociado = associado.get().getNome();
             String siglaPartido = partido.get().getSigla();
 
-            return "Associado(a) " + nomeAssociado + " foi vinculado(a) ao " + siglaPartido + " com sucesso!";
+            return "Associado " + nomeAssociado + " foi vinculado ao " + siglaPartido + " com sucesso!";
         }
         throw new ObjectNotFoundException("Associado ou partido não encontrado! Revise os Id's inseridos");
     }
@@ -94,7 +94,7 @@ public class AssociadoServiceImpl implements AssociadoService{
     }
 
     @Override
-    public String deleteById(Long id) {
+    public String deleteById(Long id){
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
             associadoRepository.deleteById(id);
@@ -106,7 +106,7 @@ public class AssociadoServiceImpl implements AssociadoService{
     }
 
     @Override
-    public String deletePartidoById(Long idAssociado, Long idPartido) {
+    public String deletePartidoById(Long idAssociado, Long idPartido){
         Optional<Associado> associadoOptional = associadoRepository.findById(idAssociado);
         Optional<Partido> partidoOptional = partidoRepository.findById(idPartido);
 
@@ -120,6 +120,6 @@ public class AssociadoServiceImpl implements AssociadoService{
 
             return nomeAssociado + " foi desvinculado do Partido " + siglaPartido + " com sucesso!";
         }
-        throw new ObjectNotFoundException("Associado ou Partido não encontrado!");
+        throw new ObjectNotFoundException("Vínculo entre Associado e Partido não encontrado!");
     }
 }
