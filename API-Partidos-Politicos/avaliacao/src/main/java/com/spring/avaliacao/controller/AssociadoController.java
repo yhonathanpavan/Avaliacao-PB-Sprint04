@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
@@ -33,26 +34,31 @@ public class AssociadoController{
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<AssociadoFormDTO> insert(@RequestBody @Valid AssociadoFormDTO associadoForm){
         return ResponseEntity.created(associadoService.insert(associadoForm)).build();
     }
 
     @PostMapping("/partidos")
+    @Transactional
     public ResponseEntity<String> insertPartido(@RequestBody @Valid VincularFormDTO vincularForm){
         return ResponseEntity.ok().body(associadoService.insertPartido(vincularForm));
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<AssociadoDTO> update(@PathVariable Long id, @RequestBody @Valid AssociadoFormDTO associadoForm){
         return ResponseEntity.ok().body(associadoService.update(id, associadoForm));
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         return  ResponseEntity.ok().body(associadoService.deleteById(id));
     }
 
     @DeleteMapping("/{idAssociado}/partidos/{idPartido}")
+    @Transactional
     public ResponseEntity<String> deletePartidoById(@PathVariable Long idAssociado, @PathVariable Long idPartido){
         return  ResponseEntity.ok().body(associadoService.deletePartidoById(idAssociado, idPartido));
     }

@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -40,16 +41,19 @@ public class PartidoController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<PartidoFormDTO> insert(@RequestBody @Valid PartidoFormDTO partidoForm){
         return ResponseEntity.created(partidoService.insert(partidoForm)).build();
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<PartidoDTO> update(@PathVariable Long id, @RequestBody @Valid PartidoFormDTO partidoForm){
         return ResponseEntity.ok().body(partidoService.update(id, partidoForm));
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> deleteById(@PathVariable Long id){
         return ResponseEntity.ok().body(partidoService.deleteById(id));
     }
