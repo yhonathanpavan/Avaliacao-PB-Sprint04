@@ -1,0 +1,446 @@
+{
+	"info": {
+		"_postman_id": "e9314650-0944-40f6-8132-64c1c2af48f4",
+		"name": "API - Associados e Politicos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Associados",
+			"item": [
+				{
+					"name": "Insere um Associado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Nome Teste\",\r\n    \"cargoPolitico\": \"Vereador\",\r\n    \"dataNascimento\": \"2001-01-25\",\r\n    \"sexo\": \"Masculino\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/associados/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vincula um Associado a um Partido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n       \"idAssociado\" : 3,\r\n       \"idPartido\" : 1\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/associados/partidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								"partidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista todos os Associados",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"maria@email.com\",\r\n    \"senha\" : \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/associados/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								""
+							]
+						},
+						"description": "Retorna todos os Associados"
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar Associado pelo Cargo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/associados?cargoPolitico=Presidente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados"
+							],
+							"query": [
+								{
+									"key": "cargoPolitico",
+									"value": "Presidente"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ordena um Associado pelo Nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/associados?sort=nome",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "nome"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista um Associado pelo ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/associados/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Altera um Associado pelo ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Nome Alterado Teste\",\r\n    \"cargoPolitico\": \"Vereador\",\r\n    \"dataNascimento\": \"2001-01-25\",\r\n    \"sexo\": \"Masculino\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/associados/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta um Associado pelo ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/associados/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove um Associado de um Partido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/associados/3/partidos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"associados",
+								"3",
+								"partidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Politicos",
+			"item": [
+				{
+					"name": "Insere um Partido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"nome\": \"Partido Teste\",\r\n        \"sigla\": \"PTT\",\r\n        \"ideologia\": \"Centro\",\r\n        \"dataDeFundacao\": \"2005-12-01\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/partidos/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista todos os Partidos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/partidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar Partido pela Ideologia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/partidos?ideologia=Centro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos"
+							],
+							"query": [
+								{
+									"key": "ideologia",
+									"value": "Centro"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista um Partido pelo ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/partidos/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista os Associados de um Partido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"nome\": \"Partido Gustaviles\",\r\n        \"sigla\": \"PG\",\r\n        \"ideologia\": \"ESQUERDA\",\r\n        \"dataDeFundacao\": \"2005-12-01\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/partidos/1/associados",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos",
+								"1",
+								"associados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Altera um Partido pelo ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Partido alterado Teste\",\r\n    \"sigla\": \"PAT\",\r\n    \"ideologia\": \"Centro\",\r\n    \"dataDeFundacao\": \"1999-05-02\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/partidos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta um Partido pelo ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/partidos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"partidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
