@@ -94,8 +94,15 @@ public class PartidoServiceImpl implements PartidoService {
     @Override
     public String deleteById(Long id){
         Optional<Partido> partidoOptional = partidoRepository.findById(id);
+        List<Associado> associado = associadoRepository.findByPartidoId(id);
 
         if (partidoOptional.isPresent()) {
+
+            //Desvinculando associados do partido para conseguir excluir
+            if(!associado.isEmpty()){
+                associado.stream().forEach(e -> e.setPartido(null));
+            }
+
             partidoRepository.deleteById(id);
 
             String siglaPartido = partidoOptional.get().getSigla();
